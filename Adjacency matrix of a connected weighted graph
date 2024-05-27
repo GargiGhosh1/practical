@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+// Define the maximum number of vertices
+#define MAX_VERTICES 100
+
+void createAdjMatrix(int N, int Adj[][MAX_VERTICES], int edges[][3], int M) {
+    // Initialize the adjacency matrix
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            Adj[i][j] = 0; // or use a very large value to signify no connection, e.g., INT_MAX
+        }
+    }
+
+    // Fill the adjacency matrix with weights
+    for (int i = 0; i < M; i++) {
+        int x = edges[i][0];
+        int y = edges[i][1];
+        int weight = edges[i][2];
+
+        Adj[x][y] = weight;
+        Adj[y][x] = weight; // Remove this line if the graph is directed
+    }
+}
+
+void printAdjMatrix(int N, int Adj[][MAX_VERTICES]) {
+    // Print the adjacency matrix
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%d ", Adj[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int N = 5; // Number of vertices
+    int M = 4; // Number of edges
+
+    // Edges array: each edge is represented as {vertex1, vertex2, weight}
+    int edges[][3] = {
+        {0, 1, 1},
+        {1, 2, 2},
+        {3, 4, 3},
+        {0, 4, 4}
+    };
+
+    int Adj[MAX_VERTICES][MAX_VERTICES];
+
+    createAdjMatrix(N, Adj, edges, M);
+
+    printf("Adjacency Matrix:\n");
+    printAdjMatrix(N, Adj);
+
+    return 0;
+}
